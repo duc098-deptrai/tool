@@ -163,7 +163,6 @@ class get_job_hustMedia:
             "chedo": "listcauhinh",
             "key":self.apikey}
         listnick = requests.post('https://hust.media/insta/profile.php',headers=self.headers,json=data).json()['listcauhinh']
-
         def datnickchay():
             for k in range(len(listnick)):
                 nick = listnick[k]['tenfb']
@@ -225,24 +224,24 @@ for m in banner:
     time.sleep(0.0012)
 print(f'{trang}-------------------------------------------------------------------------------------')
 listfile = os.listdir()
-if 'apikey' in listfile and 'cookie.txt' in listfile:
-    luachon = input('bạn có muốn đổi apikey hoặc cookie ko (n/y) : ')
+if 'apikey.txt' in listfile and 'cookie.txt' in listfile:
+    luachon = input(f'{xanhla}bạn có muốn đổi apikey hoặc cookie ko (n/y) : ')
     if luachon == 'n':
         apikey = open('apikey.txt','r').read()
         cookie = open('cookie.txt','r').read()
     elif luachon == 'y':
-        luachon2 = input('bạn muốn đổi cookie(c) hay apikey(a) muốn đổi cả 2 nhấn (ca) : ')
+        luachon2 = input(f'{xanhCyan}bạn muốn đổi cookie(c) hay apikey(a) muốn đổi cả 2 nhấn (ca) : ')
         if luachon2 == 'a':
-            nhapApikey1 = input('nhập apikey của bạn : ')
+            nhapApikey1 = input(f'{xanhCyan}nhập apikey của bạn : ')
             writeApikey = open('apikey.txt','w').write(nhapApikey1)
             apikey = open('apikey.txt','r').read()
         elif luachon2 == 'c':
-            nhapCookie1 = input('nhập cookie nick bạn chạy : ')
+            nhapCookie1 = input(f'{tim}nhập cookie nick bạn chạy : ')
             writeCookie = open('cookie.txt','w').write(nhapCookie1)
             cookie = open('cookie.txt','r').read()
         elif luachon2 == 'ca':
-            nhapApikey2 = input('nhập apikey của bạn : ')
-            nhapCookie2 = input('nhập cookie của ban : ')
+            nhapApikey2 = input(f'{xanhCyan}nhập apikey của bạn : ')
+            nhapCookie2 = input(f'{xanhduong}nhập cookie của ban : ')
             writeApikey2 = open('apikey.txt','w').write(nhapApikey2)
             writeCookie2 = open('cookie.txt','w').write(nhapCookie2)
             apikey = open('apikey.txt','r').read()
@@ -254,8 +253,8 @@ if 'apikey' in listfile and 'cookie.txt' in listfile:
         print(f"{do}nhập sai vui lòng vào lại tool")
         exit()
 elif 'apikey.txt' not in listfile and 'cookie.txt' not in listfile:
-            nhapApikey2 = input('nhập apikey của bạn : ')
-            nhapCookie2 = input('nhập cookie của bạn : ')
+            nhapApikey2 = input(f'{tim}nhập apikey của bạn : ')
+            nhapCookie2 = input(f'{xanhduong}nhập cookie của bạn : ')
             writeApikey2 = open('apikey.txt','w').write(nhapApikey2)
             writeCookie2 = open('cookie.txt','w').write(nhapCookie2)
             apikey = open('apikey.txt','r').read()
@@ -280,7 +279,7 @@ def RunTim():
                 c = mes[j]
                 mediaid = c['mediaid']
                 work = instagam.like(mediaid)
-                time.sleep(2)
+                time.sleep(4)
                 idpost = c['idpost']
                 nhan = hustmedia.receive_money(idpost,"timcheo","insta")
                 if 'error' in nhan:
@@ -295,7 +294,7 @@ def RunTim():
                         time.sleep(0.5)
                     print(nhan)
                     continue
-                for k in range(3):
+                for k in range(8):
                     print('đang làm việc : '+str(k),end='\r')
                     time.sleep(0.7)
                 print(nhan+xanhCyan)
@@ -346,8 +345,6 @@ def RunFollow():
                 time.sleep(0.5)
             break
         print(nhan)
-ten = instagam.ten()
-hustmedia.listnickchay(ten)
 chon = input('chạy tim hay follow(t/f) : ')
 for tg in range(5):
     print('8==> đang đăng nhập ',end='\r')
@@ -357,6 +354,8 @@ print('so du instagam của bạn là : ',sodu)
 for k in range(8):
     print('đang vào tools',end='\r')
     time.sleep(0.4)
+ten = instagam.ten()
+hustmedia.listnickchay(ten)
 os.system('cls')
 hay = f''''    {do}
                                              
