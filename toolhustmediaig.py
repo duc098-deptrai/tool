@@ -291,7 +291,7 @@ def RunTim():
                         if 'mess' in nhan:
                             print(nhan)
                             continue
-                        time.sleep(0.5)
+                        time.sleep(3)
                     print(nhan)
                     continue
                 for k in range(6):
