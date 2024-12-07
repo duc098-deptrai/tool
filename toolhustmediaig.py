@@ -301,6 +301,8 @@ def RunTim():
                 print(nhan+xanhCyan)
 def RunFollow():
     while True:
+        thanhcong = 1
+        thatbai = 1
         get = hustmedia.getJob("subcheo","insta")
         mes = get['message']
         idArr = []
@@ -314,17 +316,17 @@ def RunFollow():
         for j in range(len(mes)-1):
                 c = mes[j]
                 idpost = c['idpost']
-                for k in range(3):
+                for k in range(10):
                     print('đang làm việc : '+str(k),end='\r')
                     time.sleep(1)
                 work = instagam.follow(idpost) 
                 if  work:
-                    for dem in range(4):
-                        print(f'{vang}follow thành công :))',end='\r')
+                   
+                        print(xanhCyan+str(thanhcong)+f'{vang}follow thành công :))')
                         time.sleep(0.4)
                 else:
-                    for dem2 in range(4):
-                        print(f'{do}follow flail :((',end='\r')
+                    
+                        print({tim}+str(thatbai)+f'{do}follow flail :((')
                         time.sleep(0.4)
                 idArr.append(idpost)
         list_value = ','.join(str(x) for x in idArr)
