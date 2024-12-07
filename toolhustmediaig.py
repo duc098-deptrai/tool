@@ -321,12 +321,14 @@ def RunFollow():
                 work = instagam.follow(idpost) 
                 if  work:
                    
-                        print(xanhCyan+str(thanhcong)+f'{vang}follow thành công :))')
+                        print(xanhCyan,str(thanhcong),f'{vang}follow thành công :))')
                         time.sleep(0.4)
+                        thanhcong += 1
                 else:
                     
-                        print({tim}+str(thatbai)+f'{do}follow flail :((')
+                        print({tim},str(thatbai),f'{do}follow flail :((')
                         time.sleep(0.4)
+                        thatbai += 1
                 idArr.append(idpost)
         list_value = ','.join(str(x) for x in idArr)
         time.sleep(3)
