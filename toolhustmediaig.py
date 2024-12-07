@@ -294,7 +294,7 @@ def RunTim():
                         time.sleep(0.5)
                     print(nhan)
                     continue
-                for k in range(8):
+                for k in range(6):
                     print('đang làm việc : '+str(k),end='\r')
                     time.sleep(0.7)
                 print(nhan+xanhCyan)
@@ -315,7 +315,7 @@ def RunFollow():
         for j in range(len(mes)-1):
                 c = mes[j]
                 idpost = c['idpost']
-                for k in range(10):
+                for k in range(6):
                     print('đang làm việc : '+str(k),end='\r')
                     time.sleep(1)
                 work = instagam.follow(idpost) 
@@ -326,7 +326,7 @@ def RunFollow():
                         thanhcong += 1
                 else:
                     
-                        print({tim},str(thatbai),f'{do}follow flail :((')
+                        print(tim,str(thatbai),f'{do}follow flail :((')
                         time.sleep(0.4)
                         thatbai += 1
                 idArr.append(idpost)
