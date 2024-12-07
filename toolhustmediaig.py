@@ -224,31 +224,43 @@ for m in banner:
     sys.stdout.flush()
     time.sleep(0.0012)
 print(f'{trang}-------------------------------------------------------------------------------------')
-try:
-    apikey = open('apikey.txt','r').read()
-    cookie = open('cookie.txt','r').read()
-    luachon = input(f'{xanhla}bạn có muốn sử dụng cookie và apikey cũ (y/n) : ')
-    if 'n' in luachon:
-        hust = input(f'{xanhCyan}nhập apikey : ')
-        insta = input(f'{trang}nhập cookie ig : ')
-        o = open('apikey.txt','w').write(hust)
-        o1 = open('cookie.txt','w').write(insta)
+listfile = os.listdir()
+if 'apikey' in listfile and 'cookie.txt' in listfile:
+    luachon = input('bạn có muốn đổi apikey hoặc cookie ko (n/y) : ')
+    if luachon == 'n':
         apikey = open('apikey.txt','r').read()
         cookie = open('cookie.txt','r').read()
-        
-    elif 'y' in luachon:
-        apikey = open('apikey.txt','r').read()
-        cookie = open('cookie.txt','r').read()
-        
-except:    
-    hust = input(f'{xanhCyan}nhập apikey : ')
-    insta = input(f'{vang}nhập cookie ig : ')
-    o = open('apikey.txt','w').write(hust)
-    o1 = open('cookie.txt','w').write(insta)
-    apikey = open('apikey.txt','r').read()
-    cookie = open('cookie.txt','r').read()
-
-
+    elif luachon == 'y':
+        luachon2 = input('bạn muốn đổi cookie(c) hay apikey(a) muốn đổi cả 2 nhấn (ca) : ')
+        if luachon2 == 'a':
+            nhapApikey1 = input('nhập apikey của bạn : ')
+            writeApikey = open('apikey.txt','w').write(nhapApikey1)
+            apikey = open('apikey.txt','r').read()
+        elif luachon2 == 'c':
+            nhapCookie1 = input('nhập cookie nick bạn chạy : ')
+            writeCookie = open('cookie.txt','w').write(nhapCookie1)
+            cookie = open('cookie.txt','r').read()
+        elif luachon2 == 'ca':
+            nhapApikey2 = input('nhập apikey của bạn : ')
+            nhapCookie2 = input('nhập cookie của ban : ')
+            writeApikey2 = open('apikey.txt','w').write(nhapApikey2)
+            writeCookie2 = open('cookie.txt','w').write(nhapCookie2)
+            apikey = open('apikey.txt','r').read()
+            cookie = open('cookie.txt','r').read()
+        else:
+            print(f'{do}nhập sai vui lòng vào lại tool')
+            exit()
+    else:
+        print(f"{do}nhập sai vui lòng vào lại tool")
+        exit()
+elif 'apikey.txt' not in listfile and 'cookie.txt' not in listfile:
+            nhapApikey2 = input('nhập apikey của bạn : ')
+            nhapCookie2 = input('nhập cookie của bạn : ')
+            writeApikey2 = open('apikey.txt','w').write(nhapApikey2)
+            writeCookie2 = open('cookie.txt','w').write(nhapCookie2)
+            apikey = open('apikey.txt','r').read()
+            cookie = open('cookie.txt','r').read()
+ 
 hustmedia = get_job_hustMedia(apikey)
 instagam = Api_ig(cookie)
 def RunTim():
