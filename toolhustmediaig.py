@@ -290,6 +290,10 @@ def RunTim():
                         print('bấm nhận lần : ',solannhan,end='\r')
                         if 'mess' in nhan:
                             print(nhan)
+                            break
+                        elif 'error' in nhan:
+                            instagam.like(mediaid)
+                            time.sleep(2)
                             continue
                         time.sleep(3)
                     print(nhan)
@@ -297,7 +301,7 @@ def RunTim():
                 for k in range(6):
                     print('đang làm việc : '+str(k),end='\r')
                     time.sleep(0.7)
-                print(nhan+xanhCyan)
+                print(xanhCyan,nhan)
 def RunFollow():
     while True:
         thanhcong = 1
@@ -342,7 +346,7 @@ def RunFollow():
                 nhan = hustmedia.receive_money(list_value,"subcheo","insta")
                 print('lần bấm thứ : '+str(solannhan2))
                 if 'mess' in nhan:
-                    print(nhan)
+                    print(xanhCyan,nhan)
                     continue
                 time.sleep(0.5)
             break
