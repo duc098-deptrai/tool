@@ -67,6 +67,44 @@ class Api_ig:
         'doc_id': '8552604541488484',
             }
         a = requests.post('https://www.instagram.com/graphql/query',headers=self.headers,data=data)
+    def unlike(self,id):
+        data = {
+                'av': '17841463976553652',
+                '__d': 'www',
+                '__user': '0',
+                '__a': '1',
+                '__req': 'w',
+                '__hs': '20067.HYP:instagram_web_pkg.2.1.0.0.1',
+                'dpr': '1',
+                '__ccg': 'GOOD',
+                '__rev': '1018751871',
+                '__s': 'z8aele:imtjcp:fq6vw9',
+                '__hsi': '7446692498273804459',
+                '__dyn': '7xeUjG1mxu1syUbFp41twpUnwgU7SbzEdF8aUco2qwJxS0k24o1DU2_CwjE1EE2Cw8G11wBz81s8hwGxu786a3a1YwBgao6C0Mo2swtUd8-U2zxe2GewGw9a361qw8Xxm16wUwtE1uVEbUGdG1QwTU9UaQ0Lo6-3u2WE5B08-269wr86C1mwPwUQp1yUb8jK5V8aUuwm9EO6UaUaE4e1tG8BK4o',
+                '__csr': 'gnglNk5DsSIAoRilGIysgAZajirS_t5jmVlBQmH-iq8hsxbyFUhGmAHQAmdXX-jVu5aDtrKdpuiUCnyoHy48gycyV8ObhWh5xJ5yqKSHDLVEhyHQehQq9x2FHyWUgyoTAeBiCo8Aq8yo01g-U4te08hzqwrU6K0Lk0CU3IwdS2Svo1Lo6JyE0ye0eFwbyVnw129rDBig9okyEGO0l16tVWiw28EZ4cClr6zQ12A8mdQ1OwTF9ixCl0iE5W1jCkM7C5Hxt7xy0SUaoe83uwZ2wCYwk5o2dwBy8Ghw0zXhFQ01luw1fy0fZw1US',
+                '__comet_req': '7',
+                'fb_dtsg': 'NAcPHxu8O_93_Ttyz1kZ5SRg9HvsJF-PX4sgqY5I3BfQ_eWCzarK8xA:17843708194158284:1732955500',
+                'jazoest': '26219',
+                'lsd': 'Ftl-_viq8yWO_q6ijJJZzp',
+                '__spin_r': '1018751871',
+                '__spin_b': 'trunk',
+                '__spin_t': '1733818207',
+                'fb_api_caller_class': 'RelayModern',
+                'fb_api_req_friendly_name': 'usePolarisLikeMediaUnlikeMutation',
+                'variables': '''
+{
+  "media_id": '''+id+''',
+  "container_module": "single_post",
+  "inventory_source": null,
+  "ranking_info_token": null,
+  "nav_chain": "null"
+}
+            ''',
+                'server_timestamps': 'true',
+                'doc_id': '8525474704176507',
+            }
+        un = requests.post('https://www.instagram.com/graphql/query',headers=self.headers,data=data).text
+        return un
     def follow(self,target_user_id):
         data = {
                 
@@ -103,7 +141,8 @@ class Api_ig:
         follow = requests.post('https://www.instagram.com/graphql/query',headers=self.headers,data=data).json()
         
           
-        return follow['data']['xdt_create_friendship']['friendship_status']['following']
+        return follow['extensions']['is_final']
+        
     def ten(self):
         response = requests.get('https://www.instagram.com/', headers=self.headers).text
         ten = response.split('"username":"')[1].split('"')[0]
@@ -234,10 +273,12 @@ if 'apikey.txt' in listfile and 'cookie.txt' in listfile:
         if luachon2 == 'a':
             nhapApikey1 = input(f'{xanhCyan}nhập apikey của bạn : ')
             writeApikey = open('apikey.txt','w').write(nhapApikey1)
+            cookie = open('cookie.txt','r').read()
             apikey = open('apikey.txt','r').read()
         elif luachon2 == 'c':
             nhapCookie1 = input(f'{tim}nhập cookie nick bạn chạy : ')
             writeCookie = open('cookie.txt','w').write(nhapCookie1)
+            apikey = open('apikey.txt','r').read()
             cookie = open('cookie.txt','r').read()
         elif luachon2 == 'ca':
             nhapApikey2 = input(f'{xanhCyan}nhập apikey của bạn : ')
@@ -283,21 +324,22 @@ def RunTim():
                 idpost = c['idpost']
                 nhan = hustmedia.receive_money(idpost,"timcheo","insta")
                 if 'error' in nhan:
-                    loi += 1
-                    print(do+str(loi),idpost)
-                    for solannhan in range(1,3):
-                        nhan = hustmedia.receive_money(idpost,"timcheo","insta")
+                    for solannhan in range(1,4):
+                        unlike = instagam.unlike(mediaid)
+                        time.sleep(2)
+                        instagam.like(mediaid)
                         print('bấm nhận lần : ',solannhan,end='\r')
+                        nhan = hustmedia.receive_money(idpost,"timcheo","insta")
                         if 'mess' in nhan:
-                            print(nhan)
+                            print(xanhCyan,nhan)
                             break
                         elif 'error' in nhan:
-                            instagam.like(mediaid)
                             time.sleep(2)
                             continue
+                        elif 'error' in nhan and solannhan == 4:
+                            print(do+str(loi),idpost,nhan)
+                            loi += 1
                         time.sleep(3)
-                    print(nhan)
-                    continue
                 for k in range(6):
                     print('đang làm việc : '+str(k),end='\r')
                     time.sleep(0.7)
@@ -329,8 +371,8 @@ def RunFollow():
                         time.sleep(0.4)
                         thanhcong += 1
                 else:
-                    
-                        print(tim,str(thatbai),f'{do}follow flail :((')
+                        print(work)
+                        print(tim+str(thatbai),f'{do}follow flail :((',c['lienket'])
                         time.sleep(0.4)
                         thatbai += 1
                 idArr.append(idpost)
@@ -373,4 +415,3 @@ if chon == 't':
     RunTim()
 elif chon == 'f':
     RunFollow()
-
