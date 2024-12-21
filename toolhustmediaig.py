@@ -141,7 +141,7 @@ class Api_ig:
         follow = requests.post('https://www.instagram.com/graphql/query',headers=self.headers,data=data).json()
         
           
-        return follow['extensions']['is_final']
+        return follow['data']['xdt_create_friendship']['friendship_status']['following']
         
     def ten(self):
         response = requests.get('https://www.instagram.com/', headers=self.headers).text
@@ -221,9 +221,12 @@ class get_job_hustMedia:
         for m in range(3):
             print('đặt nick thành công',end='\r')
             time.sleep(1)
-os.system('cls')
+if 'nt' in os.name:
+    os.system('cls')
+else:
+    os.system('clear')
 # màu 
-do = '	\033[31m'
+do = '\033[31m'
 xanhla ='\033[32m' 
 xanhduong ='\033[34m'
 vang ='\033[33m'
@@ -255,7 +258,7 @@ banner = f'''{mau}
 |==|  /\ , ||==|   .-. ,\==|  '='   /==|-   ,   |==\.       / 
 /==/, | |- |/==/, //=/  |==|-,   _`//==/ , _  .' `-.`.___.-'  
 `--`./  `--``--`-' `-`--`-.`.____.' `--`..---'                
-                                                      {do} dev Nguyễn Huỳnh Đức _ဗီူ_đứç࿐ 
+                                                      {do} dev Nguyễn Huỳnh Đức  
 '''
 for m in banner:
     sys.stdout.write(m)
@@ -345,12 +348,15 @@ def RunTim():
                     time.sleep(0.7)
                 print(xanhCyan,nhan)
 def RunFollow():
+    thanhcong = 1
+    thatbai = 1
+    nhanArr = []
     while True:
-        thanhcong = 1
-        thatbai = 1
         get = hustmedia.getJob("subcheo","insta")
         mes = get['message']
-        idArr = []
+        jopArr = []
+        for jop in mes:
+            jopArr.append(jop['idpost'])
         if "Hết Jop hoặc ấn hơi nhanh vui lòng tải lại danh sách" in mes:
             for i in range(30):
                 print('hết job vui lòng chờ : '+str(i),'giây',end='\r')
@@ -358,56 +364,52 @@ def RunFollow():
         elif 'đăng nhập' in mes:
             print('đăng nhập thất bại')
             break
-        for j in range(len(mes)-1):
-                c = mes[j]
-                idpost = c['idpost']
-                for k in range(6):
-                    print('đang làm việc : '+str(k),end='\r')
-                    time.sleep(1)
-                work = instagam.follow(idpost) 
-                if  work:
-                   
+        for idpost in jopArr:
+                if len(nhanArr) == 6:
+                    for time1 in range(5):
+                        print(f'{xanhCyan}==> đang nhận tiền',end ='\r')
+                        time.sleep(0.4)
+                    nhan = hustmedia.receive_money(','.join(nhanArr),"subcheo","insta")
+                    if 'message' in nhan:
+                        kq = nhan['message']
+                        print(f'[{xanhla}success{trang}]',kq)
+                        nhanArr = []
+                    elif 'error' in nhan:
+                        print(do+nhan)
+                else:
+                    for k in range(5):
+                        print('đang làm việc : ',str(k),end='\r')
+                        time.sleep(1)
+                    work = instagam.follow(idpost)
+                    if  work:
                         print(xanhCyan,str(thanhcong),f'{vang}follow thành công :))')
+                        nhanArr.append(idpost)
                         time.sleep(0.4)
                         thanhcong += 1
-                else:
-                        print(work)
-                        print(tim+str(thatbai),f'{do}follow flail :((',c['lienket'])
+                    else:
+                        print(tim,str(thatbai),f'{do}follow flail :((')
                         time.sleep(0.4)
                         thatbai += 1
-                idArr.append(idpost)
-        list_value = ','.join(str(x) for x in idArr)
-        time.sleep(3)
-        for dh in range(2):
-            print('đang nhận tiền',end='\r')
-            time.sleep(0.3)
-        nhan = hustmedia.receive_money(list_value,"subcheo","insta")
-        if 'error' in nhan:
-            print(list_value)
-            for solannhan2 in range(1,5):
-                nhan = hustmedia.receive_money(list_value,"subcheo","insta")
-                print('lần bấm thứ : '+str(solannhan2))
-                if 'mess' in nhan:
-                    print(xanhCyan,nhan)
-                    continue
-                time.sleep(0.5)
-            break
-        print(nhan)
 chon = input('chạy tim hay follow(t/f) : ')
 for tg in range(5):
     print('8==> đang đăng nhập ',end='\r')
     time.sleep(0.5)
 sodu = hustmedia.danngnhap()
 print('so du instagam của bạn là : ',sodu)
-for k in range(8):
+for k in range(6):
     print('đang vào tools',end='\r')
     time.sleep(0.4)
 ten = instagam.ten()
 hustmedia.listnickchay(ten)
-os.system('cls')
+if 'nt' in os.name:
+    os.system('cls')
+else:
+    os.system('clear')
+
+
 hay = f''''    {do}
                                              
- ════════════════════════code by{xanhCyan}ᥫᩣđứcㅤूाीू{do}═══════════════════════
+ ════════════════════════code by{xanhCyan} ᥫᩣđức{do}═══════════════════════
                       
                                                '''
 print(hay)
@@ -415,3 +417,4 @@ if chon == 't':
     RunTim()
 elif chon == 'f':
     RunFollow()
+
